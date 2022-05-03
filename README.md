@@ -17,6 +17,6 @@ A Blender addon for exporting multiple FBX files targeting Unity.
 
 ## Installation
 
-- Download the [latest release](releases/latest)
+- Download the [latest release](https://github.com/ulasozguler/batch-unity-export/releases/latest)
 - In Blender, go to Edit > Preferences > Install and select downloaded file
 - In any 3D view press N, a new menu will be available under "Exporter" tab
