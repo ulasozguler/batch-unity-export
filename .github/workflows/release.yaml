@@ -1,0 +1,20 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "*"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v2
+      - name: Zip files
+        run: zip batch-unity-export-v${{github.ref_name}}.zip ./src/* -r
+      - uses: ncipollo/release-action@v1
+        with:
+          artifacts: "batch-unity-export-v${{github.ref_name}}.zip"
+          token: ${{ secrets.GITHUB_TOKEN }}
