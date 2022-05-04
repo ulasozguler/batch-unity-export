@@ -17,4 +17,5 @@ jobs:
       - uses: ncipollo/release-action@v1
         with:
           artifacts: "batch-unity-export-v${{github.ref_name}}.zip"
+          generateReleaseNotes: true
           token: ${{ secrets.GITHUB_TOKEN }}
