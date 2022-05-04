@@ -2,6 +2,20 @@ import os
 import bpy
 
 
+def preserve_selection(func):
+    def inner(*args, **kwargs):
+        orig_selected_objs = bpy.context.selected_objects
+        try:
+            return func(*args, **kwargs)
+        finally:
+            bpy.ops.object.select_all(action="DESELECT")
+            for o in orig_selected_objs:
+                o.select_set(True)
+
+    return inner
+
+
+@preserve_selection
 def export_objects(objects, folder, object_types):
     for an_obj in objects:
         bpy.ops.object.select_all(action="DESELECT")
@@ -28,7 +42,9 @@ def export_objects(objects, folder, object_types):
         bpy.ops.object.delete()
 
 
+@preserve_selection
 def export_collections(parent_collection, folder, object_types):
+
     for coll in parent_collection.children:
         if len(coll.all_objects) == 0:  # skip empty collections
             continue
