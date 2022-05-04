@@ -2,18 +2,19 @@
 
 A Blender addon for exporting multiple FBX files targeting Unity.
 
-![Panel Preview](https://i.imgur.com/HMPQirc.png)
+![Panel Preview](https://i.imgur.com/9Hw5HR0.png)
 
 ## Capabilities
 
 - Create a separate FBX file for every
+  - Selected object
   - Object
   - Collection
-  - Selected object
+  - Active scene
 - Automatically export files to selected path when project is saved
 - Apply all transforms before export and revert after
 - Axes are adjusted for Unity
-- Output path is saved per project file
+- Output path is saved per scene
 
 ## Installation
 

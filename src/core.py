@@ -44,11 +44,15 @@ def export_collections(parent_collection, folder, object_types):
         fbx(folder, coll.name, object_types)
 
 
-def fbx(path, name, object_types):
+def export_scene(scene, folder, object_types):
+    fbx(folder, scene.name, object_types, use_selection=False)
+
+
+def fbx(path, name, object_types, use_selection=True):
     obj_path = os.path.join(path, name + ".fbx")
     bpy.ops.export_scene.fbx(
         filepath=obj_path,
-        use_selection=True,
+        use_selection=use_selection,
         use_space_transform=True,
         apply_unit_scale=True,
         global_scale=1,

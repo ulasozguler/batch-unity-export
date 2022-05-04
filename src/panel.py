@@ -1,4 +1,5 @@
 from bpy.types import Panel
+from src.settings import EXPORTMODE
 
 
 class UnityBatchExportPanel(Panel):
@@ -15,20 +16,12 @@ class UnityBatchExportPanel(Panel):
         # export path
         layout.prop(settings, "export_path")
 
+        layout.prop(settings, "export_mode")
+
         # collection
-        collection_field = layout.row()
-        collection_field.prop(settings, "collection")
-        if settings.selected_only and not settings.per_collection:
-            collection_field.enabled = False
-
-        # per collection
-        layout.prop(settings, "per_collection")
-
-        # selected only
-        selected_only_field = layout.row()
-        selected_only_field.prop(settings, "selected_only")
-        if settings.per_collection:
-            selected_only_field.enabled = False
+        if settings.export_mode in [EXPORTMODE.OBJECT, EXPORTMODE.COLLECTION]:
+            collection_field = layout.row()
+            collection_field.prop(settings, "collection")
 
         # auto export
         layout.prop(settings, "auto_export")

@@ -1,5 +1,13 @@
+import bpy
 from bpy.props import BoolProperty, StringProperty, PointerProperty, EnumProperty
 from bpy.types import PropertyGroup, Collection
+
+
+class EXPORTMODE:
+    SELECTED = "SELECTED"
+    OBJECT = "OBJECT"
+    COLLECTION = "COLLECTION"
+    SINGLE = "SINGLE"
 
 
 class UnityBatchExportSettings(PropertyGroup):
@@ -9,20 +17,22 @@ class UnityBatchExportSettings(PropertyGroup):
         description="Directory to export",
         subtype="DIR_PATH",
     )
+    export_mode: EnumProperty(
+        name="Mode",
+        items=(
+            (EXPORTMODE.SELECTED, "Selected Object", ""),
+            (EXPORTMODE.OBJECT, "Object", ""),
+            (EXPORTMODE.COLLECTION, "Collection", ""),
+            (EXPORTMODE.SINGLE, "Active Scene", ""),
+        ),
+        description="Create an FBX file for every",
+        default="OBJECT",
+    )
     collection: PointerProperty(
-        name="Collection",
+        name="Parent",
         type=Collection,
-        description='Export from this collection only. Ignored when "Selected Objects" is enabled',
-    )
-    per_collection: BoolProperty(
-        name="Per Collection",
-        default=False,
-        description="Create a separate file for every non-empty collection",
-    )
-    selected_only: BoolProperty(
-        name="Selected Objects",
-        default=False,
-        description='Export selected objects only. Ignored when "Per Collection" is enabled',
+        description="Export from this collection only",
+        poll=lambda _, coll: bpy.context.scene.user_of_id(coll),
     )
     auto_export: BoolProperty(
         name="Auto Export",
@@ -45,5 +55,5 @@ class UnityBatchExportSettings(PropertyGroup):
             ),
         ),
         description="Which kind of object to export",
-        default={"MESH"},
+        default={"MESH", "OTHER"},
     )
